@@ -22,7 +22,7 @@ public class InputCollector {
             }
 
             try {
-                LineItem lineItem = inputItemParser.parseItem(input);
+                LineItem lineItem = inputItemParser.parseItemAndCalculateTax(input);
                 this.productsPurchased.add(lineItem);
             } catch (Exception e) {
                 System.out.println("Invalid input format. Try again.");

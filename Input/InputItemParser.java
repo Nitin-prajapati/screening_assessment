@@ -10,8 +10,15 @@ public class InputItemParser {
     public InputItemParser(TaxCalculator taxCalculator){
         this.taxCalculator = taxCalculator;
     }
-    public LineItem parseItem(String input) {
+    public LineItem parseItemAndCalculateTax(String input) {
         
+        Item item = this.splitAndParseInputString(input);
+        Double tax = this.taxCalculator.calculateTax(item);
+
+        return new LineItem(item,tax);
+    }    
+
+    private Item splitAndParseInputString(String input){
         String[] parts = input.split(" at ");
         double price = Double.parseDouble(parts[1]);
         String[] words = parts[0].split(" ", 2);
@@ -22,7 +29,6 @@ public class InputItemParser {
         boolean isExempt = ExemptionChecker.isExempted(name);
 
         Item item = new Item(quantity, name, price, isImported, isExempt);
-        Double tax = this.taxCalculator.calculateTax(item);
-        return new LineItem(item,tax);
-    }    
+        return item;
+    }
 }
