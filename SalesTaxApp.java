@@ -1,14 +1,20 @@
-import Input.InputParser;
-import Receipt.Receipt;
+import java.util.*;
+
+import Input.InputCollector;
+import Receipt.ReceiptPrinter;
+import Receipt.LineItem;
 
 public class SalesTaxApp {
 
     public static void main(String[] args) {
         
-        InputParser inputParser = new InputParser();
-        
-        Receipt receipt = inputParser.handleInput();
+        InputCollector inputCollector = new InputCollector();
+        inputCollector.getUserInputWithTaxCalculated();
+        List<LineItem> productsPurchased = inputCollector.getPurchasedProductLineItems();
+
+        ReceiptPrinter receipt = new ReceiptPrinter(productsPurchased);
         receipt.printTheReceipt();
+        
     }
 
 }
